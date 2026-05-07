@@ -1,0 +1,62 @@
+Here is the polished, professional version of everything you built in our session. This is the **Standard Operating Procedure (SOP)** that captures exactly what you "actually wanted to say," organized into a clear, scalable workflow for your role at Transcom.
+
+***
+
+# AudioEye Remediation: Standard Operating Procedure & AI Workflow
+
+## **1. The Core Objective**
+To efficiently resolve Jira accessibility tickets using a custom Gemini AI "Gem" as a Senior Accessibility Co-Pilot. The goal is to generate precise, performant, and WCAG-compliant JavaScript overlays within the AudioEye portal without altering the client's underlying visual design or DOM structure.
+
+## **2. The "Do No Harm" Engineering Protocol**
+Every fix must adhere strictly to these constraints:
+*   **Invisible Semantic Layer:** You are patching the accessibility tree, not the visual DOM.
+*   **Zero Structural Changes:** Never use methods that alter the DOM tree (`.innerHTML`, `.outerHTML`, `.wrap()`, or `document.createElement()`, except for injecting invisible `aria-live` regions).
+*   **Zero Visual Impact:** The UI must look visually identical byte-for-byte before and after the fix. Do not apply inline styles or client-side CSS classes (unless appending a standard `sr-only` class).
+*   **Strict Ticket Isolation:** Every Jira ticket is a clean slate. Context, selectors, or logic must never carry over from one bug to the next.
+
+## **3. The Technology Stack**
+*   **Allowed Languages:** Vanilla JavaScript (ES6) and the AudioEye Cash/jQuery library.
+*   **DOM Manipulation:** Only mutate attributes (`$().attr()`, `$().removeAttr()`) and attach event listeners (`$().on()`).
+*   **Dynamic States:** Never use `setTimeout`, `setInterval`, or custom `MutationObservers`. You must exclusively use AudioEye's `$().watch()` method to monitor for DOM node additions or dynamic class changes (e.g., waiting for an `.active` class).
+
+---
+
+## **4. The Step-by-Step AI Collaboration Workflow**
+To ensure perfect fixes, the interaction with the Gemini Gem is broken into a strict two-step process.
+
+### **Step 1: Validation & Strategy (The "Why")**
+**Your Action:** Paste the Jira AT Bug Description (Actual vs. Expected Behavior).
+**AI's Responsibility:** Before writing any code, the AI must output:
+1.  **WCAG Validation:** Identify the specific WCAG 2.1/2.2 AA failure.
+2.  **Conceptual HTML:** Provide a brief snippet showing the correct ARIA structure.
+3.  **Keyboard Flow:** Map out exactly how the component should respond to `Tab`, `Enter`, `Space`, and `Arrow` keys.
+4.  **Screen Reader Expectation:** State exactly what NVDA should announce during interaction.
+5.  **Status Check:** Prompt you to provide the Live DOM snippet.
+
+### **Step 2: Execution & Scripting (The "How")**
+**Your Action:** Paste the actual HTML DOM snippet from the live website using DevTools.
+**AI's Responsibility:** The AI scans the DOM and outputs the code:
+1.  **Selector Strategy:** Identify a resilient, stable parent selector to avoid fragile, dynamic CSS hashes.
+2.  **The AudioEye Fix:** Output the exact JavaScript payload wrapped strictly in your required portal format:
+    ```javascript
+    fix('stable-parent-selector', function(element) {
+        const $el = $(element);
+        // 1. Overlay Semantics ($el.attr...)
+        // 2. Setup dynamic monitoring ($el.watch...)
+        // 3. Attach keyboard listeners ($el.on('keydown'...))
+    });
+    ```
+
+---
+
+## **5. Example Execution (Tabset Keyboard Fix)**
+
+**Context:** Arrow keys do not navigate the tabs; NVDA reads tabs as plain text.
+
+1.  **Strategic Setup:** The AI identifies that a Roving Tabindex pattern and `role="tablist"` are missing.
+2.  **The Code Implementation:**
+    *   Target the stable `.profile-tabs-wrapper`.
+    *   Apply `role="tab"` and `role="tabpanel"` statically.
+    *   Use `$().watch()` to monitor the native `.active` class to toggle `aria-selected` and `tabindex` safely without breaking the client's existing React/Angular logic.
+    *   Inject a `$().on('keydown')` listener to handle the Right/Left arrow logic and trigger focus securely using `$el[0].focus()`.
+```
