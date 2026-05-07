@@ -1,0 +1,18 @@
+Here is the chronological list of every prompt, instruction, and question you have provided since the beginning of our current session:
+
+1. **"for this chat forget all previous chat context. I want to make a plan for fixing production fixing issue."** 
+2. **"first tell me how i use you efficiently in a prductive manner to fix the bugs"**
+3. **"what are new chat , mystuff , notebook , gems , etc. how to use all the setting to work efficiently in a scalable manner"**
+4. **"i will go for gems. now listen to my planning what i want to do."**
+5. **Detailed Workflow Context:** You explained your role as an accessibility developer at Transcom for the AudioEye client. You detailed your process of picking up Jira tickets, reproducing bugs using NVDA/manual tabbing, finding root causes in the DOM, targeting unique selectors, and using the `fix('selector', function(element) {...})` wrapper in the AudioEye portal.
+6. **"you got my point. now listen carefully. while writing fix , ensure you will not change/add/delete any html structure or apply css that would reflect the ui . no structural change no visual change. because we can only overlay the ARIA or focus issue and etc.. you have to try to fix by using vanillajs/jquery/audio cash libray(jquery like) ."**
+7. **"and you dont have to use settimeout or mutationobserver. instead you have to for dynamic dom changes . audioeye watch() method..."** (Followed by a code example of how to use `.watch()`).
+8. **"now how you will be helping me to solve the problem. first i will give the at bug full description actual + exptected. you have to understand is this a really accessibility issue... if understood give me one example"**
+9. **"and one things everytime problems were different . the flow would be same but the way of fix every problem would be different . do not mix it by fetching previous context and messup things . each problem would according to at bug and html dom. do things where it is needed ."**
+10. **"one more things when i paste the at bug you would tell me html accessible strurctue with aria attributes but also tell how the behavious of that problem . like tabset the accessible flow and how the screen reader expect (nvda)"**
+11. **Example Bug Provided:** You pasted a sample "JIRA Bug Ticket – Accessibility Issue" regarding tabset navigation not working with keyboard arrow keys.
+12. **Example DOM Provided:** You pasted the HTML snippet (`<div class="customer-profile-container">...`) associated with the tabset bug.
+13. **"i think you have understood what kind of planning i want to do"**
+14. **"Now basis of whole conversation/context . write me master prompt for me where each and everything that i have told you should follow."**
+15. **"make more long master prompt that cover everything"**
+16. **"whatever I ask you from the begining list all questions"** (This current request).
